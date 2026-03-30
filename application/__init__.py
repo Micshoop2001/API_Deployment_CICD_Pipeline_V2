@@ -6,7 +6,7 @@ from .blueprints.service_tickets import service_tickets_bp
 from .blueprints.customers import customers_bp
 from .blueprints.inventory import inventory_bp
 from flask_swagger_ui import get_swaggerui_blueprint
-from config import DevelopmentConfig, TestingConfig, prodconfig
+from config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.yaml'
@@ -27,7 +27,7 @@ def create_app(config_name):
     config_map = {
     "DevelopmentConfig": DevelopmentConfig,
     "TestingConfig": TestingConfig,
-    "prodconfig": prodconfig
+    "ProductionConfig": ProductionConfig
     }
     
     app.config.from_object(config_map[config_name])

@@ -25,7 +25,6 @@ ordered-set==4.1.0
 packaging==26.0
 psycopg2==2.9.11
 pyasn1==0.6.3
-python-dotenv==1.2.2
 python-jose==3.5.0
 PyYAML==6.0.3
 rsa==4.9.1
