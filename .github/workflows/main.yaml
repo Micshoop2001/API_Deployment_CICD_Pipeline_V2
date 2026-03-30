@@ -58,4 +58,4 @@ jobs: # Define a job named 'build'. This is everything that will excute on the t
           python -m pip install -r requirements.txt
 
       - name: Run tests # This step runs the unit tests using the unittest framework. It discovers and runs all test files that match the pattern 'test_*.py' in the 'tests' directory.
-        run: python project/run_tests.py
+        run: python run_tests.py
