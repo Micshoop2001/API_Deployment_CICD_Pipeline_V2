@@ -1,0 +1,61 @@
+name: github auto
+
+on:
+  push: # Trigger the workflow on push events to the main or master branch
+    branches: [main, master]
+
+jobs: # Define a job named 'build'. This is everything that will excute on the trigger
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code # This step checks out the repository code so that it can be used in subsequent steps
+        uses: actions/checkout@v2
+
+      - name: Set up Python # This step sets up the Python environment using the specified version (3.12 in this case)
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Create virtual environment # Create a virtual environment named 'venv' in the current directory
+        run: |
+          python -m venv venv 
+          source venv/bin/activate
+
+      - name: Install dependencies # do all you pip install stuff here, make sure to activate the virtual environment first
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Print debugging information # This step prints out various pieces of information to help with debugging, such as the Python version, current working directory, and contents of the site-packages directory in the virtual environment
+        run: |
+          echo "Python Version: $(python --version)"
+          echo "Working Directory: $(pwd)"
+          echo "Contents of Working Directory: $(ls -l)"
+          echo "Contents of site-packages: $(ls -l venv/lib/python*/site-packages)"
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12
+
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Run tests # This step runs the unit tests using the unittest framework. It discovers and runs all test files that match the pattern 'test_*.py' in the 'tests' directory.
+        run: python project/run_tests.py
