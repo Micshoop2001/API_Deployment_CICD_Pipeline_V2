@@ -11,8 +11,11 @@ from . import customers_bp
 @customers_bp.route("/login", methods=['POST']) #test
 @limiter.limit("1000/hour")
 def login():
+    data=request.get_json(silent=True)
+    if not data:
+        return jsonify({"message": "No input data provided"}), 400
     try:
-        credentials = login_schema.load(request.json)
+        credentials = login_schema.load(data)
         email = credentials['email']
         password = credentials['password']
     except ValidationError as e:
