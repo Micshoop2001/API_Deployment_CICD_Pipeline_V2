@@ -7,7 +7,10 @@ from .blueprints.customers import customers_bp
 from .blueprints.inventory import inventory_bp
 from flask_swagger_ui import get_swaggerui_blueprint
 from config import DevelopmentConfig, TestingConfig, ProductionConfig
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 SWAGGER_URL = '/api/docs'
 API_URL = '/static/swagger.yaml'
 
@@ -22,7 +25,7 @@ swaggerui_blueprint = get_swaggerui_blueprint(
 def create_app(config_name):
     print(">>> create_app CALLED:", config_name)
     print(">>> __init__.py create_app reference:", create_app)
-
+    load_dotenv()
     app = Flask(__name__)
     config_map = {
     "DevelopmentConfig": DevelopmentConfig,
